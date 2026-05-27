@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掛號統計-Miniclinic Statistics</title>
+    <style>
+        body { font-family: "Microsoft JhengHei", sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #0F2443; border-bottom: 3px solid #14B8A6; padding-bottom: 8px; }
+        nav { background: #0F2443; padding: 12px; border-radius: 8px; margin-bottom: 24px; }
+        nav a { color: white; margin-right: 20px; text-decoration: none; font-weight: bold; }
+        nav a:hover { color: #5EEAD4; }
+        .stats-section { margin-bottom: 20px; border: 1px solid #eee; padding: 15px; border-radius: 5px; background-color: #f9f9f9; }
+        .stats-section h2 { color: #555; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-top: 0; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #E2E8F0; }
+        th { background: #0F2443; color: white; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a th:href="@{/}">首頁</a>
+        <a th:href="@{/doctors}">醫師清單</a>
+        <a th:href="@{/patients}">病歷資料</a>
+        <a th:href="@{/appointment/new}">線上掛號</a>
+        <a th:href="@{/appointment/list}">掛號紀錄</a>
+        <a th:href="@{/login}">醫師登入</a>
+    </nav>
+    <h1>掛號統計</h1>
+
+    <div class="stats-section">
+        <h2>總計數</h2>
+        <ul>
+            <li><strong>醫師總數:</strong> <span th:text="${totalDoctors}">0</span></li>
+            <li><strong>病患總數:</strong> <span th:text="${totalPatients}">0</span></li>
+            <li><strong>掛號總數:</strong> <span th:text="${totalAppointments}">0</span></li>
+        </ul>
+    </div>
+
+    <div class="stats-section">
+        <h2>每科分別掛號數</h2>
+        <table>
+            <thead>
+                <tr><th>科別</th><th>掛號人數</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="entry : ${appointmentsByDepartment}">
+                    <td th:text="${entry.departmentName}"></td>
+                    <td th:text="${entry.appointmentCount}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <p style="margin-top: 20px;">
+        <a th:href="@{/}">← 回首頁</a>
+    </p>
+</body>
+</html>
