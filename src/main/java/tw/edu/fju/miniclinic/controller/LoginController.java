@@ -9,7 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import tw.edu.fju.miniclinic.model.*;
+import tw.edu.fju.miniclinic.model.Doctor;
+import tw.edu.fju.miniclinic.model.LoginForm;
+
+// 如果你的 DoctorRepository 也是放在 model 資料夾：
+import tw.edu.fju.miniclinic.model.DoctorRepository;
+
+// 如果 DoctorRepository 是在 repository 資料夾：
+import tw.edu.fju.miniclinic.model.DoctorRepository;
 
 @Controller
 public class LoginController {
