@@ -1,3 +1,31 @@
+-- 1. 建立 醫師表 (doctor)
+CREATE TABLE IF NOT EXISTS doctor (
+    doctor_id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255),
+    department VARCHAR(255),
+    specialty VARCHAR(255),
+    password_hash VARCHAR(255)
+);
+
+-- 2. 建立 病患表 (patient)
+CREATE TABLE IF NOT EXISTS patient (
+    chart_no VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255),
+    gender VARCHAR(255),
+    birth_date DATE,
+    phone VARCHAR(255)
+);
+
+-- 3. 建立 掛號表 (appointment)
+CREATE TABLE IF NOT EXISTS appointment (
+    appt_id SERIAL PRIMARY KEY,      -- 使用 SERIAL 讓它支援自動遞增序列
+    chart_no VARCHAR(255),
+    doctor_id VARCHAR(255),
+    appt_date DATE,
+    time_slot VARCHAR(255),
+    status VARCHAR(255)
+);
+
 -- 初始醫師資料（5 位）帶入 pass1234 的 BCrypt 雜湊
 INSERT INTO doctor (doctor_id, name, department, specialty, password_hash) VALUES
     ('D001', '陳志明醫師', '家醫科', '一般內科、慢性病管理','$2a$10$XhyEgd4qh5TXJa7NkMg3gOqsJxATykAyJERH7ZqTD7eEPVlcmgewm'),
